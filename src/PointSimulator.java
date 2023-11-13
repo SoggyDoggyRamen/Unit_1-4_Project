@@ -1,36 +1,54 @@
 public class PointSimulator {
     private double total;
     private double pointsPerClick = 1;
-    private int critChance = 1;
-    private int critPrice = 1;
-    private int pointsPrice = 1;
-    private boolean cloneBought = false;
-    private double clone = 0;
-    private int clonePrice = 100;
-    private boolean million = true;
-    private boolean starting = true;
-    private boolean gettingThere = true;
-    private boolean critMaster = true;
-    private boolean ruler = true;
-    private boolean god = true;
-    private int pointsLevel = 1;
+    private int critChance;
+    private int critPrice;
+    private int pointsPrice;
+    private boolean cloneBought;
+    private double clone;
+    private int clonePrice;
+    private boolean million;
+    private boolean starting;
+    private boolean gettingThere;
+    private boolean lucky;
+    private boolean ruler;
+    private boolean noLife;
+    private int pointsLevel;
 
-    public PointSimulator() {}
+    public PointSimulator() {
+        pointsPerClick = 1;
+        critChance = 1;
+        critPrice = 1;
+        pointsPrice = 1;
+        cloneBought = false;
+        clone = 0;
+        clonePrice = 100;
+        million = false;
+        starting = false;
+        gettingThere = false;
+        lucky = false;
+        ruler = false;
+        noLife = false;
+        pointsLevel = 1;
+    }
 
     public String getCmd(String cmd) {
         if (cmd.equals("")) {
             return printPoints();
         }
-        else if (cmd.equals("/cmds")) {
+        if (cmd.equals("/cmds")) {
             return helpcmds();
         }
-        else if (cmd.equals("/shop")) {
+        if (cmd.equals("/shop")) {
             return shop();
         }
-        else if (cmd.equals("/end")) {
+        if (cmd.equals("/achievements")) {
+            return achievement();
+        }
+        if (cmd.equals("/end")) {
             return "ENDGAME";
         }
-        else if (cmd.equals("UPGRADE1")) {
+        if (cmd.equals("UPGRADE1")) {
             if (total >= critPrice) {
                 total -= critPrice;
                 critChance ++;
@@ -41,7 +59,7 @@ public class PointSimulator {
                 return "UR BROKE!";
             }
         }
-        else if (cmd.equals("UPGRADE2")) {
+        if (cmd.equals("UPGRADE2")) {
             if (total >= pointsPrice) {
                 total -= pointsPrice;
                 pointsPrice *= 2;
@@ -54,8 +72,28 @@ public class PointSimulator {
                 return "UR BROKE!";
             }
         }
-        else if (cmd.equals("/totalpoints")) {
+        if (cmd.equals("/totalpoints")) {
             return (double) Math.round(total * 100)/100 + " total points!";
+        }
+        if (total >= 10 && !starting) {
+            starting = true;
+            return "Achievement Earned!: Starting out!";
+        }
+        if (total >= 100000 && !gettingThere) {
+            gettingThere = true;
+            return "Achievement Earned!: Getting there";
+        }
+        if (total >= 1000000000 && !million) {
+            million = true;
+            return "Achievement Earned!: MILLIONAIRE!!!";
+        }
+        if (critChance == 100 && !lucky) {
+            lucky = true;
+            return "Achievement Earned!: Lucky Man";
+        }
+        if (pointsLevel == 100 && !noLife) {
+            noLife = true;
+            return "Achievement Earned!: No life!";
         }
         else {
             return "Not a valid command!";
@@ -82,5 +120,8 @@ public class PointSimulator {
 
     public String shop() {
         return "\n\nSHOP: \nTOTAL POINTS: " + total  + " points! \n\nCritical Chance " + critChance + "% -- UPGRADE1: " + critPrice + " points \nPoints per click " + pointsPerClick + " points -- UPGRADE2: " + pointsPrice + " points \nCloning Machine: Clone yourself to make more points! -- " + clonePrice;
+    }
+    public String achievement() {
+        return "\n\nACHIEVEMENTS: \nStarting out: get 10 points -- " + starting + "\nGetting there: get 100,000 points -- " + gettingThere + "\nMILLIONAIRE!!!: get 1,000,000 points -- " + million + "\nLucky Man: get 100% critical chance -- " + lucky + "\nNo Life!: get point level 100 -- " + noLife;
     }
 }
