@@ -1,7 +1,7 @@
 public class PointSimulator {
-    private double total;
-    private double pointsPerClick = 1;
-    private int critChance;
+    public static double total;
+    public static double pointsPerClick = 1;
+    public int critChance;
     private int critPrice;
     private int pointsPrice;
     private boolean cloneBought;
