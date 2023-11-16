@@ -55,8 +55,17 @@ public class GameWindow extends JFrame implements ActionListener, Runnable {
             long currentTime = System.currentTimeMillis();
             long timeElapsed = (currentTime - startTime) / 1000;
             bottomLabel.setText("Time: " + timeElapsed + "s");
-            if (timeElapsed == 5 && reset == true) {
-                System.out.println("+ " + PointSimulator.pointsPerClick + " points!");
+            if (timeElapsed == 2 && reset == true) {
+                double points = PointSimulator.pointsPerClick;
+                if ((int) (Math.random() * 100 + 1) <= PointSimulator.critChance) {
+                    points *= 2;
+                    PointSimulator.total += points;
+                    System.out.println("\nCRITICAL! + " + points + " points!");
+                }
+                else {
+                    PointSimulator.total += points;
+                    System.out.println("\n+ " + points + " points!");
+                }
                 startTime = System.currentTimeMillis();
                 reset = false;
             }

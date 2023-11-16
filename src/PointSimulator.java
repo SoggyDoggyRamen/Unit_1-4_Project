@@ -1,33 +1,28 @@
 public class PointSimulator {
     public static double total;
     public static double pointsPerClick = 1;
-    public int critChance;
+    public static int critChance;
+    public static boolean hiredWorker = false;
     private int critPrice;
     private int pointsPrice;
-    private boolean cloneBought;
-    private double clone;
-    private int clonePrice;
     private boolean million;
     private boolean starting;
     private boolean gettingThere;
     private boolean lucky;
-    private boolean ruler;
     private boolean noLife;
     private int pointsLevel;
+    private int workerPrice;
 
     public PointSimulator() {
+        workerPrice = 1;
         pointsPerClick = 1;
         critChance = 1;
         critPrice = 1;
         pointsPrice = 1;
-        cloneBought = false;
-        clone = 0;
-        clonePrice = 100;
         million = false;
         starting = false;
         gettingThere = false;
         lucky = false;
-        ruler = false;
         noLife = false;
         pointsLevel = 1;
     }
@@ -48,7 +43,7 @@ public class PointSimulator {
         if (cmd.equals("/end")) {
             return "ENDGAME";
         }
-        if (cmd.equals("UPGRADE1")) {
+        if (cmd.equals("1")) {
             if (total >= critPrice) {
                 total -= critPrice;
                 critChance ++;
@@ -59,7 +54,7 @@ public class PointSimulator {
                 return "UR BROKE!";
             }
         }
-        if (cmd.equals("UPGRADE2")) {
+        if (cmd.equals("2")) {
             if (total >= pointsPrice) {
                 total -= pointsPrice;
                 pointsPrice *= 2;
@@ -71,6 +66,12 @@ public class PointSimulator {
             else {
                 return "UR BROKE!";
             }
+        }
+        if (cmd.equals ("3") && !hiredWorker) {
+            hiredWorker = true;
+        }
+        if (cmd.equals ("3") && hiredWorker) {
+            int speed = 1;
         }
         if (cmd.equals("/totalpoints")) {
             return (double) Math.round(total * 100)/100 + " total points!";
@@ -119,7 +120,12 @@ public class PointSimulator {
     }
 
     public String shop() {
-        return "\n\nSHOP: \nTOTAL POINTS: " + total  + " points! \n\nCritical Chance " + critChance + "% -- UPGRADE1: " + critPrice + " points \nPoints per click " + pointsPerClick + " points -- UPGRADE2: " + pointsPrice + " points \nCloning Machine: Clone yourself to make more points! -- " + clonePrice;
+        if (hiredWorker == false) {
+            return "\n\nSHOP: \nTOTAL POINTS: " + total  + " points! \n\nCritical Chance " + critChance + "% -- enter 1 to buy: " + critPrice + " points \nPoints per click " + pointsPerClick + " points -- enter 2 to buy: " + pointsPrice + " points \nHire a worker!: Hire someone to earn points while afk -- enter 3 to buy: 1000 points";
+        }
+        else {
+            return "\n\nSHOP: \nTOTAL POINTS: " + total  + " points! \n\nCritical Chance " + critChance + "% -- enter 1 to buy: " + critPrice + " points \nPoints per click " + pointsPerClick + " points -- enter 2 to buy: " + pointsPrice + " points \nIncrease worker speed! -- enter 3 to buy: " + workerPrice + " points";
+        }
     }
     public String achievement() {
         return "\n\nACHIEVEMENTS: \nStarting out: get 10 points -- " + starting + "\nGetting there: get 100,000 points -- " + gettingThere + "\nMILLIONAIRE!!!: get 1,000,000 points -- " + million + "\nLucky Man: get 100% critical chance -- " + lucky + "\nNo Life!: get point level 100 -- " + noLife;
