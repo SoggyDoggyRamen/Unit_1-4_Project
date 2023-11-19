@@ -1,3 +1,7 @@
+/**
+ * The PointSimulator class is the reciever of commands from the PointSimulator runner, it handles all logic in the program
+ * like
+ */
 public class PointSimulator {
     public static double total;
     public static double pointsPerClick = 1;
@@ -13,6 +17,17 @@ public class PointSimulator {
     private int pointsLevel;
     private int workerPrice;
 
+    /**
+     * Constructor for the PointSimulator class. This creates a new instance of a PointSimulator
+     *
+     * WorkerPrice is the price to hire a worker
+     * pointsPerClick is the points the user gets everytime they hit enter
+     * critChance is the user's chance to get double points
+     * critPrice is the upgrade price for critChance
+     * pointsPrice is the upgrade price of pointsPerClick
+     * million, starting, getingThere, lucky, noLife are all booleans to check if the user has the achievement or not
+     * pointsLevel is to keep track of the user's pointsPerClick level
+     */
     public PointSimulator() {
         workerPrice = 1;
         pointsPerClick = 1;
@@ -27,12 +42,17 @@ public class PointSimulator {
         pointsLevel = 1;
     }
 
+    /**
+     * getCmd method for the PointSimulator class. This method will take parameter String cmd which represents the users command, then it will return the corresponding string to the user input.
+     *
+     * @return returns the appropiate string depending on cmd
+     */
     public String getCmd(String cmd) {
         if (cmd.equals("")) {
             return printPoints();
         }
         if (cmd.equals("/cmds")) {
-            return helpcmds();
+            return "\n\nALL COMMANDS: \n/totalpoints -> view your total points\n/shop -> opens shop \n/end -> ends game! \n\n";
         }
         if (cmd.equals("/shop")) {
             return shop();
@@ -101,7 +121,11 @@ public class PointSimulator {
         }
     }
 
-
+    /**
+     * printPoints method will check if the user crits or not, and then prints out how many points the user gets
+     *
+     * @return returns a string that has "+ (amount of points)" and also notifies the user if they crit or not
+     */
     public String printPoints() {
         double points = pointsPerClick;
         if ((int) (Math.random() * 100 + 1) <= critChance ) {
@@ -115,16 +139,17 @@ public class PointSimulator {
         }
     }
 
-    public String helpcmds() {
-        return "\n\nALL COMMANDS: \n/totalpoints -> view your total points\n/shop -> opens shop \n/end -> ends game! \n\n";
-    }
-
+    /**
+     * shop method will check if the user hired a worker or not and then return a string that represents the shop, this string changes depending on the variable previously stated
+     *
+     * @return returns a String containing total points and all upgrades purchasable
+     */
     public String shop() {
         if (hiredWorker == false) {
             return "\n\nSHOP: \nTOTAL POINTS: " + total  + " points! \n\nCritical Chance " + critChance + "% -- enter 1 to buy: " + critPrice + " points \nPoints per click " + pointsPerClick + " points -- enter 2 to buy: " + pointsPrice + " points \nHire a worker!: Hire someone to earn points while afk -- enter 3 to buy: 1000 points";
         }
         else {
-            return "\n\nSHOP: \nTOTAL POINTS: " + total  + " points! \n\nCritical Chance " + critChance + "% -- enter 1 to buy: " + critPrice + " points \nPoints per click " + pointsPerClick + " points -- enter 2 to buy: " + pointsPrice + " points \nIncrease worker speed! -- enter 3 to buy: " + workerPrice + " points";
+            return "\n\nSHOP: \nTOTAL POINTS: " + total  + " points! \n\nCritical Chance " + critChance + "% -- enter 1 to buy: " + critPrice + " points \nPoints per click " + pointsPerClick + " points -- enter 2 to buy: " + pointsPrice + " points";
         }
     }
     public String achievement() {

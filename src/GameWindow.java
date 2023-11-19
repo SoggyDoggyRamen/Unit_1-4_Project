@@ -6,7 +6,6 @@ import java.awt.event.KeyAdapter;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JLabel;
-
 public class GameWindow extends JFrame implements ActionListener, Runnable {
 
     private JFrame j;
@@ -20,6 +19,9 @@ public class GameWindow extends JFrame implements ActionListener, Runnable {
     private Thread windowThread;
     private long startTime;
 
+    /**
+     * Constructor for the PointSimulator class. This creates a new instance of a PointSimulator
+     */
 
     public GameWindow(String display) {
         startTime = System.currentTimeMillis();
@@ -42,6 +44,9 @@ public class GameWindow extends JFrame implements ActionListener, Runnable {
         startThread();
 
     }
+    /**
+     * startThread method
+     */
 
     public void startThread() {
         windowThread = new Thread(this);
